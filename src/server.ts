@@ -1,9 +1,8 @@
 import express from "express";
+import dataEncryptoRoutes from "src/routes/data-encryptor";
 
 const app = express();
 
-app.get("/", (req, res) => {
-    res.send("hello world");
-});
+dataEncryptoRoutes(app);
 
 export default app;
