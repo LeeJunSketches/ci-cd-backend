@@ -10,8 +10,5 @@ describe("Data encryptor service", () => {
 
         expect(decoded.data).toEqual(data);
     });
-    
-    it("Should not pass anyway", () => {
-        expect(1).toBe(2);
-    });
+
 });
