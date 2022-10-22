@@ -17,5 +17,4 @@ export const decodeData = (token: string) => {
     } catch (error) {
         return { error };
     }
-
 };
