@@ -26,11 +26,11 @@ jobs:
       - name: Get environment variables
         id: branch_check
         run: |
-          echo "Running on branch ${{ github.ref }}"
+          echo "Running on branch ${{ github.ref }} ${{ secrets.HEROKU_APP_NAME_STAGING }}"
           if [ "${{ github.ref }}" = "refs/heads/dev" ]; then
-            echo "heroku_app_name=${{secrets.HEROKU_APP_NAME_STAGING}}" >> $GITHUB_OUTPUT
-          if [ "${{ github.ref }}" = "refs/heads/master" ]; then
-            echo "heroku_app_name=${{secrets.HEROKU_APP_NAME}}" >> $GITHUB_OUTPUT
+            echo "heroku_app_name=${{ secrets.HEROKU_APP_NAME_STAGING }}" >> $GITHUB_OUTPUT
+          elif [ "${{ github.ref }}" = "refs/heads/master" ]; then
+            echo "heroku_app_name=${{ secrets.HEROKU_APP_NAME }}" >> $GITHUB_OUTPUT
           fi
       - uses: akhileshns/heroku-deploy@v3.12.12 
         with:
@@ -38,4 +38,3 @@ jobs:
           heroku_app_name: ${{steps.branch_check.outputs.heroku_app_name}}
           heroku_email: ${{secrets.HEROKU_EMAIL}}
           usedocker: true
-      
