@@ -29,6 +29,8 @@ jobs:
           echo "Running on branch ${{ github.ref }}"
           if [ "${{ github.ref }}" = "refs/heads/dev" ]; then
             echo "heroku_app_name=${{secrets.HEROKU_APP_NAME_STAGING}}" >> $GITHUB_OUTPUT
+          if [ "${{ github.ref }}" = "refs/heads/master" ]; then
+            echo "heroku_app_name=${{secrets.HEROKU_APP_NAME}}" >> $GITHUB_OUTPUT
           fi
       - uses: akhileshns/heroku-deploy@v3.12.12 
         with:
