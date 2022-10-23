@@ -24,16 +24,16 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Get environment variables
-        id: env_check
+        id: branch_check
         run: |
           echo "Running on branch ${{ github.ref }}"
           if [ "${{ github.ref }}" = "refs/heads/dev" ]; then
-            echo "HEROKU_APP_NAME=${{secrets.HEROKU_APP_NAME_STAGING}}" >> "$GITHUB_ENV"
+            echo "heroku_app_name=${{secrets.HEROKU_APP_NAME_STAGING}}" >> $GITHUB_OUTPUT
           fi
       - uses: akhileshns/heroku-deploy@v3.12.12 
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
+          heroku_app_name: ${{steps.branch_check.outputs.heroku_app_name}}
           heroku_email: ${{secrets.HEROKU_EMAIL}}
           usedocker: true
       
