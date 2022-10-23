@@ -1,7 +1,9 @@
 name: Main workflow
 on:
   push:
-    branches: [ master ]
+    branches: 
+      - master
+      - dev
   
 jobs:
   tests:
@@ -21,6 +23,13 @@ jobs:
     needs: [build]
     steps:
       - uses: actions/checkout@v2
+      - name: Get environment variables
+        id: env_check
+        run: |
+          echo "Running on branch ${{ github.ref }}"
+          if [ "${{ github.ref }}" = "refs/heads/dev" ]; then
+            echo "HEROKU_APP_NAME=${{secrets.HEROKU_APP_NAME_STAGING}}" >> "$GITHUB_ENV"
+          fi
       - uses: akhileshns/heroku-deploy@v3.12.12 
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
