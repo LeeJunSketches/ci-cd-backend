@@ -1,11 +1,10 @@
-name: CI
-
+name: Main workflow
 on:
   push:
     branches: [ master ]
   
 jobs:
-  build:
+  tests:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
